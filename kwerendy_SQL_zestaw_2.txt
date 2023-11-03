@@ -1,0 +1,74 @@
+1zad
+
+
+a
+SELECT * FROM postac WHERE rodzaj = 'wiking' ORDER BY wiek DESC;
+delete from postac where wiek = 14;
+delete from postac where id_postaci=4;
+b
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+ALTER TABLE postac MODIFY id_postaci INT NOT NULL;
+ALTER TABLE postac DROP PRIMARY KEY;
+
+
+2zad
+
+
+a
+ALTER TABLE postac ADD COLUMN pesel VARCHAR(11);
+UPDATE postac SET pesel = '1111111121' WHERE id_postaci =1;
+UPDATE postac SET pesel = '1111121121' WHERE id_postaci =2;
+UPDATE postac SET pesel = '1111131121' WHERE id_postaci =3;
+UPDATE postac SET pesel = '1111141121' WHERE id_postaci =5;
+UPDATE postac SET pesel = '1111151121' WHERE id_postaci =6;
+UPDATE postac SET pesel = '1111161121' WHERE id_postaci =7;
+ALTER TABLE postac ADD CONSTRAINT PRIMARY KEY(pesel);
+b
+ALTER TABLE postac MODIFY COLUMN rodzaj enum('wiking','ptak','kobieta','syrena');
+c
+INSERT INTO postac VALUES(10,'Getruda Nieszczera','syrena','1990-09-09',100,'nikt',1,'11111111222');
+
+
+3zad
+
+
+a
+UPDATE postac SET statek_id = '1' WHERE nazwa LIKE '%a%';
+b
+UPDATE statek SET max_ladownosc = max_ladownosc * 0.7 WHERE data_wodowania BETWEEN '1901-01-01' AND '2000-12-31';
+c
+SELECT IF(wiek>1000,'tak','nie') FROM postac;
+
+
+4zad
+
+
+a
+ALTER TABLE postac MODIFY rodzaj ENUM('kobieta','wiking','ptak','syrena','waz');
+INSERT INTO postac VALUES(8,'Loko','waz','1990-09-09',15,NULL,NULL,'12345678901');
+b
+CREATE TABLE Marynarz(id_postaci INT NOT NULL,nazwa VARCHAR(40),rodzaj enum('kobieta','wiking','ptak','syrena','waz'), data_ur DATE, wiek INT UNSIGNED, funkcja VARCHAR(30),statek_id VARCHAR(20),pesel VARCHAR(11) NOT NULL, FOREIGN KEY(pesel) REFERENCES postac(pesel));
+INSERT INTO Marynarz SELECT * FROM postac WHERE statek_id IS NOT NULL;
+c
+ALTER TABLE Marynarz ADD CONSTRAINT PRIMARY KEY(pesel);
+
+
+5zad
+
+
+a
+UPDATE postac SET statek_id = NULL WHERE statek_id IS NOT NULL;
+b
+ALTER TABLE postac DROP FOREIGN KEY postac_ibfk_1;
+ALTER TABLE Marynarz DROP FOREIGN KEY Marynarz_ibfk_1;
+DELETE FROM postac WHERE pesel = '1111141121';
+c
+DELETE FROM statek; lub DELETE FROM statek WHERE nazwa_statku LIKE '%';
+d
+DROP TABLE statek;
+e
+CREATE TABLE zwierz(id INT AUTO_INCREMENT PRIMARY KEY,nazwa VARCHAR(20),wiek INT);
+f
+INSERT INTO zwierz VALUES(10,'Getruda Nieszczera',100),(2,'Drozd',12),(8,'Loko',15);

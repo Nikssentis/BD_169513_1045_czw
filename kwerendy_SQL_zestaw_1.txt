@@ -43,3 +43,29 @@ INSERT INTO przetwory VALUES(1,1000,1,'bigos',DEFAULT,1);
 
 5zad
 
+
+1
+insert into postac values(4,1,'wiking','1990-09-09',14);
+insert into postac values(5,1,'wiking','1990-09-09',14);
+insert into postac values(6,1,'wiking','1990-09-09',14);
+insert into postac values(7,1,'wiking','1990-09-09',14);
+insert into postac values(8,1,'wiking','1990-09-09',14);
+2
+create table statek(nazwa_statku varchar(20) primary key, rodzaj_statku enum('1','2'),data_wodowania DATE, max_ladownosc INT UNSIGNED);
+3
+insert into statek values(1,1,'1990-09-09',123);
+insert into statek values(2,2,'1990-09-09',123);
+4
+alter table postac add column funkcja varchar(30);
+5
+update postac set funkcja = 'kapitan' where id_postaci =1;
+6
+alter table postac add column statek_id varchar(8);
+alter table postac add foreign key (statek_id) references statek(nazwa_statku);
+7
+UPDATE postac SET statek_id = '1' WHERE rodzaj = 'wiking';
+UPDATE postac SET statek_id = '1' WHERE rodzaj = 'ptak';
+8
+delete from izba where nazwa_izby = 'spizarnia';
+9
+drop table izba;
